@@ -46,7 +46,7 @@ async def cbguides(_, query: CallbackQuery):
 » ᴛᴜʀɴ ᴏɴ ᴛʜᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛ ꜰɪʀꜱᴛ ʙᴇꜰᴏʀᴇ ꜱᴛᴀʀᴛ ᴛᴏ ᴘʟᴀʏ ᴍᴜꜱɪᴄ.
 » ɪꜰ ᴛʜᴇ ᴜꜱᴇʀʙᴏᴛ ɴᴏᴛ ᴊᴏɪɴᴇᴅ ᴛᴏ ᴠɪᴅᴇᴏ ᴄʜᴀᴛ, ᴍᴀᴋᴇ ꜱᴜʀᴇ ɪꜰ ᴛʜᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛ ᴀʟʀᴇᴀᴅʏ ᴛᴜʀɴᴇᴅ ᴏɴ, ᴏʀ ᴛʏᴘᴇ /userbotleave ᴛʜᴇɴ ᴛʏᴘᴇ /userbotjoin ᴀɢᴀɪɴ.
 
-💡 **ɪꜰ ʏᴏᴜ ʜᴀᴠᴇ ᴀ ꜰᴏʟʟᴏᴡ-ᴜᴘ Qᴜᴇꜱᴛɪᴏɴꜱ ᴀʙᴏᴜᴛ ᴛʜɪꜱ ʙᴏᴛ ᴏʀ ᴀ ᴀɴʏ ᴘʀᴏʙʟᴇᴍ ᴛʜᴇɴ ʏᴏᴜ ᴄᴀɴ ᴛᴇʟʟ ɪᴛ ᴏɴ ꜱᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ ʜᴇʀᴇ: @CreatorPavanSupport**""",
+**ɪꜰ ʏᴏᴜ ʜᴀᴠᴇ ᴀ ꜰᴏʟʟᴏᴡ-ᴜᴘ Qᴜᴇꜱᴛɪᴏɴꜱ ᴀʙᴏᴜᴛ ᴛʜɪꜱ ʙᴏᴛ ᴏʀ ᴀ ᴀɴʏ ᴘʀᴏʙʟᴇᴍ ᴛʜᴇɴ ʏᴏᴜ ᴄᴀɴ ᴛᴇʟʟ ɪᴛ ᴏɴ ꜱᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ ʜᴇʀᴇ: @CreatorPavanSupport**""",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("🔙 ʙᴀᴄᴋ ʜᴏᴍᴇ", callback_data="cbstart")]]
         ),
@@ -137,6 +137,25 @@ async def cbadmin(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbsudo"))
 async def cbsudo(_, query: CallbackQuery):
+    await query.edit_message_text(
+        f"""ʙʀᴏᴋᴇɴ ꜱᴜᴅᴏ ᴄᴏᴍᴍᴀɴᴅꜱ :
+
+» /rmw - ᴄʟᴇᴀɴ ᴀʟʟ ʀᴀᴡ ꜰɪʟᴇꜱ 
+» /rmd - ᴄʟᴇᴀɴ ᴀʟʟ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ꜰɪʟᴇꜱ 
+» /sysinfo - ꜱʜᴏᴡ ᴛʜᴇ ꜱʏꜱᴛᴇᴍ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ 
+» /update - ᴜᴘᴅᴀᴛᴇ ʏᴏᴜʀ ʙᴏᴛ ᴛᴏ ʟᴀᴛᴇꜱᴛ ᴠᴇʀꜱɪᴏɴ 
+» /restart - ʀᴇꜱᴛᴀʀᴛ ʏᴏᴜʀ ʙᴏᴛ 
+» /leaveall - ᴏʀᴅᴇʀ ᴜꜱᴇʀʙᴏᴛ ᴛᴏ ʟᴇᴀᴠᴇ ꜰʀᴏᴍ ᴀʟʟ ɢʀᴏᴜᴘ
+
+**ᴛʜɪꜱ ᴏᴘ ʙᴏᴛ ɪꜱ ꜱᴘᴇᴄɪᴀʟʟʏ ᴅᴇꜱɪɢɴᴇᴅ ʙʏ ᴄʀᴇᴀᴛᴏʀ ᴘᴀᴠᴀɴ.**""",
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("🔙 ʙʀᴏᴋᴇɴ ʙᴀᴄᴋ", callback_data="cbcmds")]]
+        ),
+    )
+
+
+@Client.on_callback_query(filters.regex("cbplay"))
+async def cbplay(_, query: CallbackQuery):
     await query.edit_message_text(
         f"""ʙʀᴏᴋᴇɴ ꜱᴜᴅᴏ ᴄᴏᴍᴍᴀɴᴅꜱ :
 
