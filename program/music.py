@@ -2,8 +2,8 @@
 # Commit Start Date 20/10/2021
 # Finished On 28/10/2021
 
-import asyncio
 import re
+import asyncio
 
 from config import ASSISTANT_NAME, BOT_USERNAME, IMG_1, IMG_2
 from driver.filters import command, other_filters
@@ -50,25 +50,17 @@ async def ytdl(link):
         return 0, stderr.decode()
 
 
-@Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
+@Client.on_message(command(["mplay", f"mplay@{BOT_USERNAME}"]) & other_filters)
 async def play(c: Client, m: Message):
     replied = m.reply_to_message
     chat_id = m.chat.id
     keyboard = InlineKeyboardMarkup(
         [
             [
-                      InlineKeyboardButton("⏹", callback_data="cbstop"),
-                      InlineKeyboardButton("⏸", callback_data="cbpause"),
-                      InlineKeyboardButton("▶️", callback_data="cbresume"),
-                  ],[
-                InlineKeyboardButton(text="🖱 ᴍᴇɴᴜ", callback_data="cbmenu"),
-                InlineKeyboardButton(text="ʟʏʀɪᴄꜱ 💡", callback_data="playlist"),
-            ],[
-                InlineKeyboardButton(text="ꜱᴜᴘᴘᴏʀᴛ", url=f"https://t.me/Creatorpavansupport"),
-                InlineKeyboardButton(text="ᴜᴘᴅᴀᴛᴇꜱ", url=f"https://t.me/theCreatorPavan"),
-            ],[
-                      InlineKeyboardButton("ʙʀᴏᴋᴇɴ ᴄʟᴏꜱᴇ", callback_data="cls")],
-                  ]
+                InlineKeyboardButton(text="• Mᴇɴᴜ", callback_data="cbmenu"),
+                InlineKeyboardButton(text="• Cʟᴏsᴇ", callback_data="cls"),
+            ]
+        ]
     )
     if m.sender_chat:
         return await m.reply_text("you're an __Anonymous Admin__ !\n\n» revert back to user account from admin rights.")
@@ -96,11 +88,11 @@ async def play(c: Client, m: Message):
         await m.reply_text("missing required permission:" + "\n\n» ❌ __Add users__")
         return
     try:
-        ubot = await user.get_me()
-        b = await c.get_chat_member(chat_id, ubot.id)
+        ubot = (await user.get_me()).id
+        b = await c.get_chat_member(chat_id, ubot)
         if b.status == "kicked":
             await m.reply_text(
-                f"@{ASSISTANT_NAME} **ᴛʜɪꜱ ᴄʀᴇᴀᴛᴏʀ ᴘᴀᴠᴀɴ ᴏᴘ ᴀꜱꜱɪꜱᴛᴀɴᴛ ʙᴀɴɴᴇᴅ ɪɴ** {m.chat.title}\n\n» **ᴜɴʙᴀɴ ᴛʜᴇ ᴜꜱᴇʀʙᴏᴛ ꜰɪʀꜱᴛ ᴀɴᴅ ᴛʜᴇɴ ᴀᴅᴅ ᴛʜᴇᴍ ᴍᴀɴᴜᴀʟʟʏ. ɪꜰ ᴜ ʜᴀᴠᴇ ᴀɴʏ ᴘʀᴏʙʟᴇᴍ ᴛʜᴇɴ ᴄᴏɴᴛᴀᴄᴛ ᴜꜱ ᴀᴛ ꜱᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ ɢʀᴏᴜᴘ.**\n\n© @CreatorPavanNetwork"
+                f"@{ASSISTANT_NAME} **is banned in group** {m.chat.title}\n\n» **unban the userbot first if you want to use this bot.**"
             )
             return
     except UserNotParticipant:
@@ -108,20 +100,22 @@ async def play(c: Client, m: Message):
             try:
                 await user.join_chat(m.chat.username)
             except Exception as e:
-                await m.reply_text(f"❌ **userbot failed to join Contact at : @CreatorPavanSupport**\n\n**reason**: `{e}`")
+                await m.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")
                 return
         else:
             try:
-                pope = await c.export_chat_invite_link(chat_id)
-                pepo = await c.revoke_chat_invite_link(chat_id, pope)
-                await user.join_chat(pepo.invite_link)
+                user_id = (await user.get_me()).id
+                link = await c.export_chat_invite_link(chat_id)
+                if "+" in link:
+                    link_hash = (link.replace("+", "")).split("t.me/")[1]
+                    await ubot.join_chat(link_hash)
+                await c.promote_member(chat_id, user_id)
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
                 return await m.reply_text(
-                    f"❌ **userbot failed to join Contact at : @CreatorPavanSupport**\n\n**reason**: `{e}`"
+                    f"❌ **userbot failed to join**\n\n**reason**: `{e}`"
                 )
-
     if replied:
         if replied.audio or replied.voice:
             suhu = await replied.reply("📥 **downloading audio...**")
@@ -142,11 +136,12 @@ async def play(c: Client, m: Message):
                 await suhu.delete()
                 await m.reply_photo(
                     photo=f"{IMG_1}",
-                    caption=f"**❰ 𝗕𝗿𝗼𝗸𝗲𝗻 ❘ 𝟮.𝟬 ❱ ❤ 𝗡𝗼𝘄 🤘 𝗣𝗹𝗮𝘆𝗶𝗻𝗴 📀 𝗙𝗿𝗼𝗺 🔊 𝗖𝗿𝗲𝗮𝘁𝗼𝗿 🚩 𝗣𝗮𝘃𝗮𝗻 😎 𝗦𝗲𝗿𝘃𝗲𝗿...**🤞\n\n **𝗨𝘀𝗲𝗿  :** {m.from_user.mention()}",
+                    caption=f"💡 **Track added to queue »** `{pos}`\n\n🏷 **Name:** [{songname}]({link})\n💭 **Chat:** `{chat_id}`\n🎧 **Request by:** {m.from_user.mention()}",
                     reply_markup=keyboard,
                 )
             else:
              try:
+                await suhu.edit("🔄 **Joining vc...**")
                 await call_py.join_group_call(
                     chat_id,
                     AudioPiped(
@@ -159,19 +154,19 @@ async def play(c: Client, m: Message):
                 requester = f"[{m.from_user.first_name}](tg://user?id={m.from_user.id})"
                 await m.reply_photo(
                     photo=f"{IMG_2}",
-                    caption=f"**❰ 𝗕𝗿𝗼𝗸𝗲𝗻 ❘ 𝟮.𝟬 ❱ ❤ 𝗡𝗼𝘄 🤘 𝗣𝗹𝗮𝘆𝗶𝗻𝗴 📀 𝗙𝗿𝗼𝗺 🔊 𝗖𝗿𝗲𝗮𝘁𝗼𝗿 🚩 𝗣𝗮𝘃𝗮𝗻 😎 𝗦𝗲𝗿𝘃𝗲𝗿...**🤞\n\n **𝗨𝘀𝗲𝗿  :** {requester}",
+                    caption=f"💡 **Music streaming started.**\n\n🏷 **Name:** [{songname}]({link})\n💭 **Chat:** `{chat_id}`\n💡 **Status:** `Playing`\n🎧 **Request by:** {requester}",
                     reply_markup=keyboard,
                 )
              except Exception as e:
                 await suhu.delete()
-                await m.reply_text(f"**ᴠᴄ ᴏɴ ᴋʀ ʙᴀʙʏ** 🙂")
+                await m.reply_text(f"🚫 error:\n\n» {e}")
         else:
             if len(m.command) < 2:
                 await m.reply(
-                    "» **ꜱᴏɴɢ ɴᴀᴍᴇ ʙᴀʙʏ** 🙂"
+                    "» reply to an **audio file** or **give something to search.**"
                 )
             else:
-                suhu = await m.reply("🔎")
+                suhu = await c.send_message(chat_id, "🔎 **Searching...**")
                 query = m.text.split(None, 1)[1]
                 search = ytsearch(query)
                 if search == 0:
@@ -191,11 +186,12 @@ async def play(c: Client, m: Message):
                             requester = f"[{m.from_user.first_name}](tg://user?id={m.from_user.id})"
                             await m.reply_photo(
                                 photo=f"{IMG_1}",
-                                caption=f"**❰ 𝗕𝗿𝗼𝗸𝗲𝗻 ❘ 𝟮.𝟬 ❱ ❤ 𝗡𝗼𝘄 🤘 𝗣𝗹𝗮𝘆𝗶𝗻𝗴 📀 𝗙𝗿𝗼𝗺 🔊 𝗖𝗿𝗲𝗮𝘁𝗼𝗿 🚩 𝗣𝗮𝘃𝗮𝗻 😎 𝗦𝗲𝗿𝘃𝗲𝗿...**🤞\n\n **𝗨𝘀𝗲𝗿  :** {requester}",
+                                caption=f"💡 **Track added to queue »** `{pos}`\n\n🏷 **Name:** [{songname}]({url})\n💭 **Chat:** `{chat_id}`\n🎧 **Request by:** {requester}",
                                 reply_markup=keyboard,
                             )
                         else:
                             try:
+                                await suhu.edit("🔄 **Joining vc...**")
                                 await call_py.join_group_call(
                                     chat_id,
                                     AudioPiped(
@@ -208,20 +204,20 @@ async def play(c: Client, m: Message):
                                 requester = f"[{m.from_user.first_name}](tg://user?id={m.from_user.id})"
                                 await m.reply_photo(
                                     photo=f"{IMG_2}",
-                                    caption=f"**❰ 𝗕𝗿𝗼𝗸𝗲𝗻 ❘ 𝟮.𝟬 ❱ ❤ 𝗡𝗼𝘄 🤘 𝗣𝗹𝗮𝘆𝗶𝗻𝗴 📀 𝗙𝗿𝗼𝗺 🔊 𝗖𝗿𝗲𝗮𝘁𝗼𝗿 🚩 𝗣𝗮𝘃𝗮𝗻 😎 𝗦𝗲𝗿𝘃𝗲𝗿...**🤞\n\n **𝗨𝘀𝗲𝗿  :** {requester}",
+                                    caption=f"💡 **Music streaming started.**\n\n🏷 **Name:** [{songname}]({url})\n💭 **Chat:** `{chat_id}`\n💡 **Status:** `Playing`\n🎧 **Request by:** {requester}",
                                     reply_markup=keyboard,
                                 )
                             except Exception as ep:
                                 await suhu.delete()
-                                await m.reply_text(f"**ᴠᴄ ᴏɴ ᴋʀ ʙᴀʙʏ** 🙂")
+                                await m.reply_text(f"🚫 error: `{ep}`")
 
     else:
         if len(m.command) < 2:
             await m.reply(
-                "» **ꜱᴏɴɢ ɴᴀᴍᴇ ʙᴀʙʏ** 🙂"
+                "» reply to an **audio file** or **give something to search.**"
             )
         else:
-            suhu = await m.reply("🔎")
+            suhu = await c.send_message(chat_id, "🔎 **Searching...**")
             query = m.text.split(None, 1)[1]
             search = ytsearch(query)
             if search == 0:
@@ -241,11 +237,12 @@ async def play(c: Client, m: Message):
                         )
                         await m.reply_photo(
                             photo=f"{IMG_1}",
-                            caption=f"**❰ 𝗕𝗿𝗼𝗸𝗲𝗻 ❘ 𝟮.𝟬 ❱ ❤ 𝗡𝗼𝘄 🤘 𝗣𝗹𝗮𝘆𝗶𝗻𝗴 📀 𝗙𝗿𝗼𝗺 🔊 𝗖𝗿𝗲𝗮𝘁𝗼𝗿 🚩 𝗣𝗮𝘃𝗮𝗻 😎 𝗦𝗲𝗿𝘃𝗲𝗿...**🤞\n\n **𝗨𝘀𝗲𝗿  :** {requester}",
+                            caption=f"💡 **Track added to queue »** `{pos}`\n\n🏷 **Name:** [{songname}]({url})\n💭 **Chat:** `{chat_id}`\n🎧 **Request by:** {requester}",
                             reply_markup=keyboard,
                         )
                     else:
                         try:
+                            await suhu.edit("🔄 **Joining vc...**")
                             await call_py.join_group_call(
                                 chat_id,
                                 AudioPiped(
@@ -258,12 +255,12 @@ async def play(c: Client, m: Message):
                             requester = f"[{m.from_user.first_name}](tg://user?id={m.from_user.id})"
                             await m.reply_photo(
                                 photo=f"{IMG_2}",
-                                caption=f"**❰ 𝗕𝗿𝗼𝗸𝗲𝗻 ❘ 𝟮.𝟬 ❱ ❤ 𝗡𝗼𝘄 🤘 𝗣𝗹𝗮𝘆𝗶𝗻𝗴 📀 𝗙𝗿𝗼𝗺 🔊 𝗖𝗿𝗲𝗮𝘁𝗼𝗿 🚩 𝗣𝗮𝘃𝗮𝗻 😎 𝗦𝗲𝗿𝘃𝗲𝗿...**🤞\n\n **𝗨𝘀𝗲𝗿  :** {requester}",
+                                caption=f"💡 **Music streaming started.**\n\n🏷 **Name:** [{songname}]({url})\n💭 **Chat:** `{chat_id}`\n💡 **Status:** `Playing`\n🎧 **Request by:** {requester}",
                                 reply_markup=keyboard,
                             )
                         except Exception as ep:
                             await suhu.delete()
-                            await m.reply_text(f"**ᴠᴄ ᴏɴ ᴋʀ ʙᴀʙʏ** 🙂")
+                            await m.reply_text(f"🚫 error: `{ep}`")
 
 
 # stream is used for live streaming only
@@ -306,11 +303,11 @@ async def stream(c: Client, m: Message):
         await m.reply_text("missing required permission:" + "\n\n» ❌ __Add users__")
         return
     try:
-        ubot = await user.get_me()
-        b = await c.get_chat_member(chat_id, ubot.id)
+        ubot = (await user.get_me()).id
+        b = await c.get_chat_member(chat_id, ubot)
         if b.status == "kicked":
             await m.reply_text(
-                f"@{ASSISTANT_NAME} **ᴛʜɪꜱ ᴄʀᴇᴀᴛᴏʀ ᴘᴀᴠᴀɴ ᴏᴘ ᴀꜱꜱɪꜱᴛᴀɴᴛ ʙᴀɴɴᴇᴅ ɪɴ** {m.chat.title}\n\n» **ᴜɴʙᴀɴ ᴛʜᴇ ᴜꜱᴇʀʙᴏᴛ ꜰɪʀꜱᴛ ᴀɴᴅ ᴛʜᴇɴ ᴀᴅᴅ ᴛʜᴇᴍ ᴍᴀɴᴜᴀʟʟʏ. ɪꜰ ᴜ ʜᴀᴠᴇ ᴀɴʏ ᴘʀᴏʙʟᴇᴍ ᴛʜᴇɴ ᴄᴏɴᴛᴀᴄᴛ ᴜꜱ ᴀᴛ ꜱᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ ɢʀᴏᴜᴘ.**\n\n© @CreatorPavanNetwork"
+                f"@{ASSISTANT_NAME} **is banned in group** {m.chat.title}\n\n» **unban the userbot first if you want to use this bot.**"
             )
             return
     except UserNotParticipant:
@@ -318,25 +315,28 @@ async def stream(c: Client, m: Message):
             try:
                 await user.join_chat(m.chat.username)
             except Exception as e:
-                await m.reply_text(f"❌ **userbot failed to join Contact at : @CreatorPavanSupport**\n\n**reason**: `{e}`")
+                await m.reply_text(f"❌ **userbot failed to join**\n\n**reason**: `{e}`")
                 return
         else:
             try:
-                pope = await c.export_chat_invite_link(chat_id)
-                pepo = await c.revoke_chat_invite_link(chat_id, pope)
-                await user.join_chat(pepo.invite_link)
+                user_id = (await user.get_me()).id
+                link = await c.export_chat_invite_link(chat_id)
+                if "+" in link:
+                    link_hash = (link.replace("+", "")).split("t.me/")[1]
+                    await ubot.join_chat(link_hash)
+                await c.promote_member(chat_id, user_id)
             except UserAlreadyParticipant:
                 pass
             except Exception as e:
                 return await m.reply_text(
-                    f"❌ **userbot failed to join Contact at : @CreatorPavanSupport**\n\n**reason**: `{e}`"
+                    f"❌ **userbot failed to join**\n\n**reason**: `{e}`"
                 )
 
     if len(m.command) < 2:
         await m.reply("» give me a live-link/m3u8 url/youtube link to stream.")
     else:
         link = m.text.split(None, 1)[1]
-        suhu = await m.reply("🔄 **processing stream...**")
+        suhu = await c.send_message(chat_id, "🔄 **processing stream...**")
 
         regex = r"^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+"
         match = re.match(regex, link)
@@ -347,7 +347,7 @@ async def stream(c: Client, m: Message):
             veez = 1
 
         if veez == 0:
-            await suhu.edit(f"❌ yt-dl issues detected\n\n» `{ytlink}`")
+            await suhu.edit(f"❌ yt-dl issues detected\n\n» `{livelink}`")
         else:
             if chat_id in QUEUE:
                 pos = add_to_queue(chat_id, "Radio", livelink, link, "Audio", 0)
@@ -355,11 +355,12 @@ async def stream(c: Client, m: Message):
                 requester = f"[{m.from_user.first_name}](tg://user?id={m.from_user.id})"
                 await m.reply_photo(
                     photo=f"{IMG_1}",
-                    caption=f"**❰ 𝗕𝗿𝗼𝗸𝗲𝗻 ❘ 𝟮.𝟬 ❱ ❤ 𝗡𝗼𝘄 🤘 𝗣𝗹𝗮𝘆𝗶𝗻𝗴 📀 𝗙𝗿𝗼𝗺 🔊 𝗖𝗿𝗲𝗮𝘁𝗼𝗿 🚩 𝗣𝗮𝘃𝗮𝗻 😎 𝗦𝗲𝗿𝘃𝗲𝗿...**🤞\n\n **𝗨𝘀𝗲𝗿  :** {requester}",
+                    caption=f"💡 **Track added to queue »** `{pos}`\n\n💭 **Chat:** `{chat_id}`\n🎧 **Request by:** {requester}",
                     reply_markup=keyboard,
                 )
             else:
                 try:
+                    await suhu.edit("🔄 **Joining vc...**")
                     await call_py.join_group_call(
                         chat_id,
                         AudioPiped(
@@ -379,4 +380,4 @@ async def stream(c: Client, m: Message):
                     )
                 except Exception as ep:
                     await suhu.delete()
-                    await m.reply_text(f"**ᴠᴄ ᴏɴ ᴋʀ ʙᴀʙʏ** 🙂")
+                    await m.reply_text(f"🚫 error: `{ep}`")
