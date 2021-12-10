@@ -83,17 +83,29 @@ async def cbcmds(_, query: CallbackQuery):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("ᴀᴅᴍɪɴ ᴄᴍᴅ", callback_data="cbadmin"),
-                    InlineKeyboardButton("ꜱᴜᴅᴏ ᴄᴍᴅ", callback_data="cbsudo"),
+                    InlineKeyboardButton("ᴘʟᴀʏᴇʀ", callback_data="cbplay"), 
+                    InlineKeyboardButton("ꜱᴜᴅᴏ", callback_data="cbsudo"),
                 ],[
-                    InlineKeyboardButton("ʙᴀꜱɪᴄ ᴄᴍᴅ", callback_data="cbbasic")
+                    InlineKeyboardButton("ᴀᴅᴍɪɴ", callback_data="cbadmin"), 
+                    InlineKeyboardButton("ᴠɪᴅᴇᴏ", callback_data="cbvideo"),
                 ],[
-                    InlineKeyboardButton("🔙 ʙʀᴏᴋᴇɴ ʙᴀᴄᴋ", callback_data="cbstart")
+                    InlineKeyboardButton("ᴘᴀᴠᴀɴ", callback_data="cbpavan"), 
+                    InlineKeyboardButton("ᴀꜱꜱɪꜱᴛᴀɴᴛ", callback_data="cbassistant"),
+                ],[
+                    InlineKeyboardButton("ꜱᴛʀᴇᴀᴍ", callback_data="cbstream"), 
+                    InlineKeyboardButton("ꜱᴛᴀᴛᴜꜱ", callback_data="cbstatus"),
+                ],[
+                    InlineKeyboardButton("ᴀʟɪᴠᴇ", callback_data="cbalive"), 
+                    InlineKeyboardButton("ᴏᴡɴᴇʀ", callback_data="cbowner"),
+                ],[
+                    InlineKeyboardButton("ʙᴀꜱɪᴄ", callback_data="cbbasic"),
+                    InlineKeyboardButton("ᴅᴏᴡɴʟᴏᴀᴅ", callback_data="cbdownload"),
+                ],[
+                    InlineKeyboardButton("🔙 ʜᴏᴍᴇ ʙᴀᴄᴋ", callback_data="cbstart")
                 ],
             ]
         ),
     )
-
 
 @Client.on_callback_query(filters.regex("cbbasic"))
 async def cbbasic(_, query: CallbackQuery):
