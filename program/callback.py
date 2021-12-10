@@ -52,6 +52,24 @@ async def cbguides(_, query: CallbackQuery):
         ),
     )
 
+@Client.on_callback_query(filters.regex("cbcredit"))
+async def cbcredit(_, query: CallbackQuery):
+    await query.edit_message_text(
+        f"""**ʜᴏᴡ ᴛᴏ ᴜꜱᴇ ᴘᴀᴠᴀɴ ᴛᴜɴᴇꜱ :**
+
+» ꜰɪʀꜱᴛ, ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ. 
+» ᴛʜᴇɴ, ᴘʀᴏᴍᴏᴛᴇ ᴍᴇ ᴀꜱ ᴀᴅᴍɪɴɪꜱᴛʀᴀᴛᴏʀ ᴀɴᴅ ɢɪᴠᴇ ᴀʟʟ ᴘᴇʀᴍɪꜱꜱɪᴏɴꜱ ᴇxᴄᴇᴘᴛ ᴀɴᴏɴʏᴍᴏᴜꜱ ᴀᴅᴍɪɴ.
+» ᴀꜰᴛᴇʀ ᴘʀᴏᴍᴏᴛɪɴɢ ᴍᴇ, ᴛʏᴘᴇ /reload ɪɴ ɢʀᴏᴜᴘ ᴛᴏ ʀᴇꜰʀᴇꜱʜ ᴛʜᴇ ᴀᴅᴍɪɴ ᴅᴀᴛᴀ.
+» ᴀᴅᴅ @PavanTunesAssistant ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴏʀ ᴛʏᴘᴇ /userbotjoin ᴛᴏ ɪɴᴠɪᴛᴇ ʜᴇʀ.
+» ᴛᴜʀɴ ᴏɴ ᴛʜᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛ ꜰɪʀꜱᴛ ʙᴇꜰᴏʀᴇ ꜱᴛᴀʀᴛ ᴛᴏ ᴘʟᴀʏ ᴍᴜꜱɪᴄ.
+» ɪꜰ ᴛʜᴇ ᴜꜱᴇʀʙᴏᴛ ɴᴏᴛ ᴊᴏɪɴᴇᴅ ᴛᴏ ᴠɪᴅᴇᴏ ᴄʜᴀᴛ, ᴍᴀᴋᴇ ꜱᴜʀᴇ ɪꜰ ᴛʜᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛ ᴀʟʀᴇᴀᴅʏ ᴛᴜʀɴᴇᴅ ᴏɴ, ᴏʀ ᴛʏᴘᴇ /userbotleave ᴛʜᴇɴ ᴛʏᴘᴇ /userbotjoin ᴀɢᴀɪɴ.
+
+**ɪꜰ ʏᴏᴜ ʜᴀᴠᴇ ᴀ ꜰᴏʟʟᴏᴡ-ᴜᴘ Qᴜᴇꜱᴛɪᴏɴꜱ ᴀʙᴏᴜᴛ ᴛʜɪꜱ ʙᴏᴛ ᴏʀ ᴀ ᴀɴʏ ᴘʀᴏʙʟᴇᴍ ᴛʜᴇɴ ʏᴏᴜ ᴄᴀɴ ᴛᴇʟʟ ɪᴛ ᴏɴ ꜱᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ ʜᴇʀᴇ: @CreatorPavanSupport**""",
+        reply_markup=InlineKeyboardMarkup(
+            [[InlineKeyboardButton("🔙 ʙᴀᴄᴋ ʜᴏᴍᴇ", callback_data="cbstart")]]
+        ),
+    )
+
 
 @Client.on_callback_query(filters.regex("cbcmds"))
 async def cbcmds(_, query: CallbackQuery):
